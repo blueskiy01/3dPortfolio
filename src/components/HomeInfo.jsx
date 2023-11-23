@@ -1,5 +1,4 @@
 import React from 'react'
-import { arrow } from '../assets/icons'
 import { Link } from 'react-router-dom'
 
 const InfoBox = ({text,link,btnText}) => (

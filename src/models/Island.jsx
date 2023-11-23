@@ -7,7 +7,7 @@ Title: Fox's islands
 */
 
 import { useRef, useEffect } from "react";
-import { useGLTF } from "@react-three/drei";
+import { useAnimations, useGLTF } from "@react-three/drei";
 import { useFrame, useThree } from "@react-three/fiber";
 import  {a} from '@react-spring/three';
 
