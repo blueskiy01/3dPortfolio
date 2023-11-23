@@ -10,16 +10,19 @@ import React, { useEffect, useRef } from "react";
 import { useGLTF, useAnimations } from "@react-three/drei";
 
 import scene from '../assets/3d/fox.glb'
-import exp from "constants";
 
-export function Model({currentAnimationm, ...props}) {
+const Fox = ({currentAnimation, ...props}) => {
   const group = useRef();
-  const { nodes, materials, animations } = useGLTF("/fox.glb");
+  const { nodes, materials, animations } = useGLTF(scene);
   const { actions } = useAnimations(animations, group);
 
   useEffect(() => {
-    
-  }, [action, currentAnimation]);
+    Object.values(actions).forEach((action) => action.stop());
+
+    if (actions[currentAnimation]) {
+      actions[currentAnimation].play();
+    }
+  }, [actions, currentAnimation]);
   return (
     <group ref={group} {...props} dispose={null}>
       <group name="Sketchfab_Scene">
@@ -59,5 +62,4 @@ export function Model({currentAnimationm, ...props}) {
   );
 }
 
-useGLTF.preload("/fox.glb");
-export default Model;
+export default Fox;
