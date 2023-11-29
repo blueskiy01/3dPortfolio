@@ -9,16 +9,17 @@ import Fox from '../models/Fox';
 import { Canvas} from '@react-three/fiber';
 
 const Contact = () => {
-  const formRef = useRef(null);
+  const formRef = useRef();
   const [form,setForm]= useState({name:'', email:'', message:''})
   const [isLoading, setIsLoading]= useState(false);
   const [currentAnimation, setCurrentAnimation]= useState('idle');
 
   const {alert, showAlert, hideAlert} = useAlert();
 
-  const handleChange= (e) => {
-  setForm({...form, [e.target.name]: e.target.value}) 
-};
+  const handleChange = ({ target: { name, value } }) => {
+    setForm({ ...form, [name]: value });
+  };
+
   const handleSubmit= (e) => {
     e.preventDefault();
     setIsLoading(true);
@@ -84,7 +85,7 @@ const Contact = () => {
       className="input"
       placeholder="yourname@gmail.com"
       required
-      value={form.name}
+      value={form.email}
       onChange={handleChange}
       onFocus={handleFocus}
      onBlur={handleBlur} 
@@ -111,35 +112,41 @@ const Contact = () => {
       onFocus={handleFocus}
       onBlur={handleBlur}
       >
-        {isLoading ? 'Sending...' : 'Send Message'}
-        </button>
-    </form>
-    </div>
-
-    <div className="lg:w-1/2 w-full lg:h-auto md:h-[550px] h-[350px]
-    ">
-      <Canvas 
-      camera={{
-        position: [0, 0, 5],
-        fov: 35,
-        near: 0.1,
-        far: 1000
-      }} 
-      >
-      <directionalLight intensity={2.5} position={[0,0,1]} />
-      <ambientLight intensity={0.5} />
-
-      <Suspense fallback={<Loader />}>
-        <Fox 
-        currentAnimationm={currentAnimation}
-        position={[0.5, 0.35, 0]}
-        rotation={[12.6,-0.6, 0]}
-        scale={[0.5,0.5,0.5]}
-        />
-      </Suspense>
-      </Canvas>
+       {isLoading ? "Sending..." : "Submit"}
+          </button>
+        </form>
       </div>
-  </section>
+
+      <div className='lg:w-1/2 w-full lg:h-auto md:h-[550px] h-[350px]'>
+        <Canvas
+          camera={{
+            position: [0, 0, 5],
+            fov: 75,
+            near: 0.1,
+            far: 1000,
+          }}
+        >
+          <directionalLight position={[0, 0, 1]} intensity={2.5} />
+          <ambientLight intensity={1} />
+          <pointLight position={[5, 10, 0]} intensity={2} />
+          <spotLight
+            position={[10, 10, 10]}
+            angle={0.15}
+            penumbra={1}
+            intensity={2}
+          />
+
+          <Suspense fallback={<Loader />}>
+            <Fox
+              currentAnimation={currentAnimation}
+              position={[0.5, 0.35, 0]}
+              rotation={[12.629, -0.6, 0]}
+              scale={[0.5, 0.5, 0.5]}
+            />
+          </Suspense>
+        </Canvas>
+      </div>
+    </section>
   )
 }
 
