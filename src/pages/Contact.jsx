@@ -2,6 +2,8 @@ import React, { Suspense, useRef, useState } from 'react'
 import emailjs from '@emailjs/browser';
 
 import Loader from '../components/Loader';
+import Alert from '../components/Alert';
+import useAlert from '../hooks/useAlert';
 
 import Fox from '../models/Fox';
 import { Canvas} from '@react-three/fiber';
@@ -11,6 +13,8 @@ const Contact = () => {
   const [form,setForm]= useState({name:'', email:'', message:''})
   const [isLoading, setIsLoading]= useState(false);
   const [currentAnimation, setCurrentAnimation]= useState('idle');
+
+  const {alert, showAlert, hideAlert} = useAlert();
 
   const handleChange= (e) => {
   setForm({...form, [e.target.name]: e.target.value}) 
@@ -33,10 +37,10 @@ const Contact = () => {
       import.meta.env.VITE_APP_EMAILJS_PUBLIC_KEY
     ).then(() => {
       setIsLoading(false);
-      //TODO: Show success message
-      //TODO: Hide an alert
+      showAlert({ show:true, text: 'Message sent successfully', type:'success'})
 
       setTimeout(() => {
+        hideAlert();
         setCurrentAnimation('idle');
         setForm({name:'', email:'', message:''});
       }, [3000])
@@ -45,7 +49,7 @@ const Contact = () => {
     setIsLoading(false);
     setCurrentAnimation('idle');
     console.log(error);
-    //TODO: Show error message
+    showAlert({ show:true, text: 'I did not receive your message', type:'danger'})
   })
 };
 
@@ -55,6 +59,7 @@ const Contact = () => {
 
   return (
    <section className='relative flex lg:flex-row flex-col max-container'>
+    {alert.show && <Alert {...alert} /> }
     <div className="flex-1 min-w-[50%] flex flex-col">
       <h1 className="head-text">Get In Touch</h1>
     <form className="w-full flex flex-col gap-7 mt-14" onSubmit={handleSubmit}>
