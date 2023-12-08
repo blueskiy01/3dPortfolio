@@ -1,15 +1,18 @@
-import hero from './hero.jpg'
-import meta from './meta.png'
-import shopify from './shopify.png'
-import starbucks from './starbucks.png'
-import tesla from './tesla.png'
 import logo from './logo.svg'
+import gritlab from './gritlab.png'
+import discord from './discord.png'
+import photoshop from './photoshop.png'
+import illustrator from './illustrator.png'
+import golang from './golang.png'
+
 
 export {
-    hero,
-    meta,
-    shopify,
-    starbucks,
-    tesla,
-    logo
+    golang,
+    gritlab,
+    logo,
+    discord,
+    photoshop,
+    illustrator,
+
+
 }
